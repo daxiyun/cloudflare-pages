@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/daxiyun/static/js/JSyb.3.0.min.js"></script>
+    <script type="text/javascript" src="https://nan.pages.dev/js/enc.js"></script>
 </head>
 <body style="width: 960px;margin: 0 auto;">
     <div id="html"></div>
@@ -29,7 +29,7 @@
                     sha = data.sha;
                     content = window.atob(data.content);
                     text = $.parseJSON(content);
-                    $("#html").html(JSyb.sm4("de", document.cookie, text.data));
+                    $("#html").html(sm4(text.data, document.cookie, "de"));
                 }
             });
         }
@@ -40,14 +40,14 @@
                     reader.onload = function () {
                         var data = {
                             "message": "update data",
-                            "content": window.btoa('{"access_token":"' + text.access_token + '","data":"' + JSyb.sm4("en", document.cookie, this.result) + '"}'),
+                            "content": window.btoa('{"access_token":"' + text.access_token + '","data":"' + sm4(this.result, document.cookie, "en") + '"}'),
                             "sha": sha
                         };
                         $.ajax({
                             type: "put",
                             url: "https://api.github.com/repos/daxiyun/daxiyun.github.io/contents/bookmark/bookmarks.json",
                             headers: {
-                                "Authorization": "token " + JSyb.sm4("de", document.cookie, text.access_token)
+                                "Authorization": "token " + sm4(text.access_token, document.cookie, "de")
                             },
                             data: JSON.stringify(data),
                             success: function (result) {

@@ -20,7 +20,7 @@ function start() {
         success: function (result) {
                 var person = window.prompt("请输入解密密码", "");
                 if (person != null) {
-                    data = JSyb.sm4('de', person, result.data);
+                    data = sm4(result.data, person, 'de');
                     data = $.parseJSON(data);
                     $.each(data.sites, function (siteName, val) {
                         mySites.push(new Site(val.siteName, val.siteUser, val.seed));

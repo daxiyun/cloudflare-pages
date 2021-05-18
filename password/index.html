@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-cmn-Hans">
 <head>
-    <title>Bookmark</title>
+    <title>PassWord</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="document.cookie, "></script>
+    <script type="text/javascript" src="https://nan.pages.dev/js/enc.js"></script>
 </head>
 <body style="width: 960px;margin: 0 auto;">
     <pre id="html" style="font-size:14px;font-family:consolas;"></pre>
@@ -23,7 +23,7 @@
             $.ajax({
                 type: "get",
                 cache: false,
-                url: "https://api.github.com/repos/daxiyun/daxiyun.github.io/contents/password/password.json",
+                url: "https://api.github.com/repos/daxiyun/cloudflare-pages/contents/password/password.json",
                 dataType: 'json',
                 success: function (data) {
                     sha = data.sha;
@@ -45,7 +45,7 @@
                         };
                         $.ajax({
                             type: "put",
-                            url: "https://api.github.com/repos/daxiyun/daxiyun.github.io/contents/password/password.json",
+                            url: "https://api.github.com/repos/daxiyun/cloudflare-pages/contents/password/password.json",
                             headers: {
                                 "Authorization": "token " + sm4(text.access_token, document.cookie, "de")
                             },

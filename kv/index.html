@@ -16,7 +16,7 @@
     <script>
 		var person = window.prompt("请输入解密密码", "");
 		if (person != null) {
-			document.cookie = JSyb.sm3(person) + ";secure";
+			document.cookie = sm3(person) + ";secure";
 		}
 		
 		document.getElementById("upfile").onchange = function() {

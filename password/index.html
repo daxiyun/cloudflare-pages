@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <title>Bookmark</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/daxiyun/static/js/JSyb.3.0.min.js"></script>
+</head>
+<body style="width: 960px;margin: 0 auto;">
+    <pre id="html" style="font-size:14px;font-family:consolas;"></pre>
+    <div style="padding: 10px;border-top: 2px solid #FF7800;">
+        <input type="file" name="file" /><span id="return"></span>
+    </div>
+    <script>
+        var person = window.prompt("请输入解密密码", "");
+        if (person != null) {
+            document.cookie = person + ";secure";
+        }
+
+        function get() {
+            $.ajax({
+                type: "get",
+                cache: false,
+                url: "https://api.github.com/repos/daxiyun/daxiyun.github.io/contents/password/password.json",
+                dataType: 'json',
+                success: function (data) {
+                    sha = data.sha;
+                    content = window.atob(data.content);
+                    text = $.parseJSON(content);
+                    $("#html").html(JSyb.sm4("de", document.cookie, text.data));
+                }
+            });
+        }
+
+        $(":file").change(function () {
+                    var reader = new FileReader(); //这是核心,读取操作就是由它完成.
+                    reader.readAsText($(':file')[0].files[0]); //读取文件的内容,也可以读取文件的URL
+                    reader.onload = function () {
+                        var data = {
+                            "message": "update data",
+                            "content": window.btoa('{"access_token":"' + text.access_token + '","data":"' + JSyb.sm4("en", document.cookie, this.result) + '"}'),
+                            "sha": sha
+                        };
+                        $.ajax({
+                            type: "put",
+                            url: "https://api.github.com/repos/daxiyun/daxiyun.github.io/contents/password/password.json",
+                            headers: {
+                                "Authorization": "token " + JSyb.sm4("de", document.cookie, text.access_token)
+                            },
+                            data: JSON.stringify(data),
+                            success: function (result) {
+                                var time = 10;
+                                $("#return").html("上传成功，<span id=\"time\">" + time + "</span>秒后更新本地数据。");
+                                var int = setInterval(function () {
+                                        if (time > 1) {
+                                            time = time - 1;
+                                            $("#time").html(time);
+                                        } else {
+                                            $("#return").html("已更新。");
+                                            setTimeout(function () {
+                                                    $("#return").html("");
+                                                },
+                                                2000);
+                                            window.clearInterval(int);
+                                        }
+                                    },
+                                    1000);
+                                setTimeout(get, 10000);
+                            }
+                        });
+                    }
+                })
+
+                get();
+    </script>
+</body>
+</html>

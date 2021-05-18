@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+    <title>上传文件</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/daxiyun/static/js/JSyb.3.0.min.js"></script>
+</head>
+<body style="width: 960px;margin: 0 auto;">
+    <div id="html"></div>
+    <div style="padding: 10px;border-top: 2px solid #FF7800;">
+        <input type="file" id="upfile" />
+	<p><span id="return"></span></p>
+    </div>
+    <script>
+		var person = window.prompt("请输入解密密码", "");
+		if (person != null) {
+			document.cookie = JSyb.sm3(person) + ";secure";
+		}
+		
+		document.getElementById("upfile").onchange = function() {
+			var file = document.getElementById("upfile").files[0];
+			var name = file.name;
+			var url = 'https://data.yunbin.xyz/file/' + name;
+			var reader = new FileReader(); //这是核心,读取操作就是由它完成.
+			reader.readAsArrayBuffer(file); //读取文件的内容,也可以读取文件的URL
+			reader.onload = function() {
+				var xhr = new XMLHttpRequest();
+				xhr.onload = function(event) {
+					document.getElementById('return').innerHTML = '上传成功 <a href="'+url+'" target="_blank">'+url+'</a>';
+				}
+				xhr.open('PUT', url);
+				xhr.setRequestHeader("Authorization", document.cookie);
+				xhr.send(this.result);
+			}
+		}
+    </script>
+</body>
+</html>

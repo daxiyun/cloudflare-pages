@@ -23,7 +23,7 @@
             $.ajax({
                 type: "get",
                 cache: false,
-                url: "https://api.github.com/repos/daxiyun/daxiyun.github.io/contents/bookmark/bookmarks.json",
+                url: "https://api.github.com/repos/daxiyun/cloudflare-pages/contents/bookmark/bookmarks.json",
                 dataType: 'json',
                 success: function (data) {
                     sha = data.sha;
@@ -45,7 +45,7 @@
                         };
                         $.ajax({
                             type: "put",
-                            url: "https://api.github.com/repos/daxiyun/daxiyun.github.io/contents/bookmark/bookmarks.json",
+                            url: "https://api.github.com/repos/daxiyun/cloudflare-pages/contents/bookmark/bookmarks.json",
                             headers: {
                                 "Authorization": "token " + sm4(text.access_token, document.cookie, "de")
                             },

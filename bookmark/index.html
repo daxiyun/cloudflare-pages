@@ -5,76 +5,51 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://nan.pages.dev/js/enc.js"></script>
 </head>
 <body style="width: 960px;margin: 0 auto;">
     <div id="html"></div>
     <div style="padding: 10px;border-top: 2px solid #FF7800;">
-        <input type="file" name="file" /><span id="return"></span>
+        <input type="file" id="upfile" /><span id="return"></span>
     </div>
     <script>
 		var pwd = document.cookie;
 		if (pwd == '') {
 			var person = window.prompt("请输入解密密码", "");
 			if (person != null) {
-				document.cookie = person + ";secure";
+				document.cookie = sm3(person) + ";secure";
 				pwd = document.cookie;
 			}
 		}
 
         function get() {
-            $.ajax({
-                type: "get",
-                cache: false,
-                url: "bookmarks.json",
-                success: function (data) {
-                    GithubToken = sm4(data.access_token, pwd, "de");
-                    $("#html").html(sm4(data.data, pwd, "de"));
-                }
-            });
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.open('GET', 'https://data.daxiyun.workers.dev/data/bookmark');
+			xmlhttp.setRequestHeader("Authorization", pwd);
+			xmlhttp.onload = function() {
+                document.getElementById("upfile") = xmlhttp.response;
+			}
         }
-
-        $(":file").change(function () {
-                    var reader = new FileReader(); //这是核心,读取操作就是由它完成.
-                    reader.readAsText($(':file')[0].files[0]); //读取文件的内容,也可以读取文件的URL
-                    reader.onload = function () {
-                        var data = {
-                            "message": "update data",
-                            "content": window.btoa('{"access_token":"' + text.access_token + '","data":"' + sm4(this.result, pwd, "en") + '"}'),
-                            "sha": sha
-                        };
-                        $.ajax({
-                            type: "put",
-                            url: "https://api.github.com/repos/daxiyun/cloudflare-pages/contents/bookmark/bookmarks.json",
-                            headers: {
-                                "Authorization": "token " + GithubToken
-                            },
-                            data: JSON.stringify(data),
-                            success: function (result) {
-                                var time = 10;
-                                $("#return").html("上传成功，<span id=\"time\">" + time + "</span>秒后更新本地数据。");
-                                var int = setInterval(function () {
-                                        if (time > 1) {
-                                            time = time - 1;
-                                            $("#time").html(time);
-                                        } else {
-                                            $("#return").html("已更新。");
-                                            setTimeout(function () {
-                                                    $("#return").html("");
-                                                },
-                                                2000);
-                                            window.clearInterval(int);
-                                        }
-                                    },
-                                    1000);
-                                setTimeout(get, 10000);
-                            }
-                        });
-                    }
-                })
-
-                get();
+        
+        document.getElementById("upfile").onchange = function() {
+			var reader = new FileReader(); //这是核心,读取操作就是由它完成.
+            reader.readAsText(document.getElementById("upfile").files[0]); //读取文件的内容,也可以读取文件的URL
+            reader.onload = function () {
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.open('PUT', 'https://data.daxiyun.workers.dev/data/bookmark');
+				xmlhttp.setRequestHeader("Authorization", pwd);
+				xmlhttp.send(this.result);
+				xmlhttp.onload = function() {
+					var ReturnData = xmlhttp.response;
+					if (ReturnData == 'ok') {
+						document.getElementById('return').innerHTML = '上传成功。';
+						get();
+					}
+				}
+            }
+        }
+        
+        get();
     </script>
 </body>
 </html>

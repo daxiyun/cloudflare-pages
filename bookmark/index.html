@@ -24,7 +24,9 @@
                 type: "get",
                 cache: false,
                 url: "https://api.github.com/repos/daxiyun/cloudflare-pages/contents/bookmark/bookmarks.json",
-                dataType: 'json',
+                headers: {
+                    "Authorization": "token " + sm4(text.access_token, document.cookie, "de")
+                },
                 success: function (data) {
                     sha = data.sha;
                     content = window.atob(data.content);

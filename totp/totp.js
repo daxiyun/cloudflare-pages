@@ -15,19 +15,17 @@ function start() {
 
     $.ajax({
         type: 'GET',
-        url: 'data.json',
-        dataType: 'json',
+        url: 'https://data.daxiyun.workers.dev/data/totp',
         success: function (result) {
                 var pwd = document.cookie;
                 if (pwd == '') {
                     var person = window.prompt("请输入解密密码", "");
                     if (person != null) {
-                        document.cookie = person + ";secure";
+                        document.cookie = sm3(person) + ";secure";
 				        pwd = document.cookie;
                     }
                 } else {
-                    data = sm4(result.data, pwd, 'de');
-                    data = $.parseJSON(data);
+                    data = $.parseJSON(result);
                     $.each(data.sites, function (siteName, val) {
                         mySites.push(new Site(val.siteName, val.siteUser, val.seed));
                     });

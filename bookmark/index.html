@@ -27,8 +27,8 @@
 			xmlhttp.open('GET', 'https://data.daxiyun.workers.dev/data/bookmark');
 			xmlhttp.setRequestHeader("Authorization", pwd);
 			xmlhttp.onload = function() {
-                document.getElementById("upfile") = xmlhttp.response;
-			}
+			document.getElementById("html").innerHTML = xmlhttp.response;
+		}
         }
         
         document.getElementById("upfile").onchange = function() {

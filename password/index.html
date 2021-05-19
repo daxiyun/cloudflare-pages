@@ -14,7 +14,6 @@
         <input type="file" name="file" /><span id="return"></span>
     </div>
     <script>
-        var GithubToken = '8bb3f09b0706c9f634e7f621ac158b410843dbbdb0e1c2899cb513ce2f82c5c5588ed6092d1d2bfa6e61c54dbe1b21af';
 		var pwd = document.cookie;
 		if (pwd == '') {
 			var person = window.prompt("请输入解密密码", "");
@@ -23,7 +22,6 @@
 				pwd = document.cookie;
 			}
 		}
-        GithubToken = sm4(GithubToken, pwd, "de");
 
         function get() {
             $.ajax({
@@ -31,10 +29,8 @@
                 cache: false,
                 url: "password.json",
                 success: function (data) {
-                    sha = data.sha;
-                    content = window.atob(data.data);
-                    text = $.parseJSON(content);
-                    $("#html").html(sm4(text.data, pwd, "de"));
+                    GithubToken = sm4(data.access_token, pwd, "de");
+                    $("#html").html(sm4(data.data, pwd, "de"));
                 }
             });
         }

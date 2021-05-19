@@ -14,9 +14,13 @@
 	<p><span id="return"></span></p>
     </div>
     <script>
-		var person = window.prompt("请输入解密密码", "");
-		if (person != null) {
-			document.cookie = sm3(person) + ";secure";
+		var pwd = document.cookie;
+		if (pwd == '') {
+			var person = window.prompt("请输入解密密码", "");
+			if (person != null) {
+				document.cookie = sm3(person) + ";secure";
+				pwd = document.cookie;
+			}
 		}
 		
 		document.getElementById("upfile").onchange = function() {
@@ -31,7 +35,7 @@
 					document.getElementById('return').innerHTML = '上传成功 <a href="'+url+'" target="_blank">'+url+'</a>';
 				}
 				xhr.open('PUT', url);
-				xhr.setRequestHeader("Authorization", document.cookie);
+				xhr.setRequestHeader("Authorization", pwd);
 				xhr.send(this.result);
 			}
 		}

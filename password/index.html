@@ -15,23 +15,26 @@
     </div>
     <script>
         var GithubToken = '8bb3f09b0706c9f634e7f621ac158b410843dbbdb0e1c2899cb513ce2f82c5c5588ed6092d1d2bfa6e61c54dbe1b21af';
-        var person = window.prompt("请输入解密密码", "");
-        if (person != null) {
-            document.cookie = person + ";secure";
-        }
-        GithubToken = sm4(GithubToken, document.cookie, "de");
+		var pwd = document.cookie;
+		if (pwd == '') {
+			var person = window.prompt("请输入解密密码", "");
+			if (person != null) {
+				document.cookie = person + ";secure";
+				pwd = document.cookie;
+			}
+		}
+        GithubToken = sm4(GithubToken, pwd, "de");
 
         function get() {
             $.ajax({
                 type: "get",
                 cache: false,
                 url: "password.json",
-                dataType: 'json',
                 success: function (data) {
                     sha = data.sha;
-                    content = window.atob(data.content);
+                    content = window.atob(data.data);
                     text = $.parseJSON(content);
-                    $("#html").html(sm4(text.data, document.cookie, "de"));
+                    $("#html").html(sm4(text.data, pwd, "de"));
                 }
             });
         }
@@ -42,7 +45,7 @@
                     reader.onload = function () {
                         var data = {
                             "message": "update data",
-                            "content": window.btoa('{"access_token":"' + text.access_token + '","data":"' + sm4(this.result, document.cookie, "en") + '"}'),
+                            "content": window.btoa('{"access_token":"' + text.access_token + '","data":"' + sm4(this.result, pwd, "en") + '"}'),
                             "sha": sha
                         };
                         $.ajax({

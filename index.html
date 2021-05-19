@@ -21,15 +21,15 @@
       @-ms-keyframes blink{0%{background:#ddd;color:#000}50%{background:#ddd;color:#000}50.01%{background:0 0;color:#aaa}99.99%{background:0 0;color:#aaa}100%{background:#ddd;color:#aaa}}
       @-o-keyframes blink{0%{background:#ddd;color:#000}50%{background:#ddd;color:#000}50.01%{background:0 0;color:#aaa}99.99%{background:0 0;color:#aaa}100%{background:#ddd;color:#aaa}}
       @keyframes blink{0%{background:#ddd;color:#000}50%{background:#ddd;color:#000}50.01%{background:0 0;color:#aaa}99.99%{background:0 0;color:#aaa}100%{background:#ddd;color:#aaa}}
-	    [touch-action="none"]{ -ms-touch-action: none; touch-action: none; }
-	    [touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }
-	    [touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }
-	    [touch-action="scroll"],[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }
+      [touch-action="none"]{ -ms-touch-action: none; touch-action: none; }
+      [touch-action="pan-x"]{ -ms-touch-action: pan-x; touch-action: pan-x; }
+      [touch-action="pan-y"]{ -ms-touch-action: pan-y; touch-action: pan-y; }
+      [touch-action="scroll"],[touch-action="pan-x pan-y"],[touch-action="pan-y pan-x"]{ -ms-touch-action: pan-x pan-y; touch-action: pan-x pan-y; }
     </style>
 </head>
-<body onselectstart="return false">
-<p>
+<body>
 <div class="wrap">
+<p>
 <h1>/*
  * 我所想的，只是一个宁静的天空，除此之外，别无他求。
  */</h1>
@@ -66,8 +66,5 @@
 }
 </p>
 </div>
-<script type="text/javascript"> 
-    document.oncontextmenu=function(e){return false;} 
-</script>
 </body>
 </html>

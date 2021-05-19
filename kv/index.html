@@ -30,13 +30,13 @@
 			var reader = new FileReader(); //这是核心,读取操作就是由它完成.
 			reader.readAsArrayBuffer(file); //读取文件的内容,也可以读取文件的URL
 			reader.onload = function() {
-				var xhr = new XMLHttpRequest();
-				xhr.onload = function(event) {
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.open('PUT', url);
+				xmlhttp.setRequestHeader("Authorization", pwd);
+				xmlhttp.send(this.result);
+				xmlhttp.onload = function() {
 					document.getElementById('return').innerHTML = '上传成功 <a href="'+url+'" target="_blank">'+url+'</a>';
 				}
-				xhr.open('PUT', url);
-				xhr.setRequestHeader("Authorization", pwd);
-				xhr.send(this.result);
 			}
 		}
     </script>

@@ -25,10 +25,7 @@
             $.ajax({
                 type: "get",
                 cache: false,
-                url: "https://api.github.com/repos/daxiyun/cloudflare-pages/contents/password/password.json",
-                headers: {
-                    "Authorization": "token " + GithubToken
-                },
+                url: "password.json",
                 success: function (data) {
                     sha = data.sha;
                     content = window.atob(data.content);

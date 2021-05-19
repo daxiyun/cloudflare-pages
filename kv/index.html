@@ -26,7 +26,7 @@
 		document.getElementById("upfile").onchange = function() {
 			var file = document.getElementById("upfile").files[0];
 			var name = file.name;
-			var url = 'https://data.yunbin.xyz/file/' + name;
+			var url = 'https://data.yunbin.xyz/files/' + name;
 			var reader = new FileReader(); //这是核心,读取操作就是由它完成.
 			reader.readAsArrayBuffer(file); //读取文件的内容,也可以读取文件的URL
 			reader.onload = function() {

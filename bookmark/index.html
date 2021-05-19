@@ -27,7 +27,7 @@
                 cache: false,
                 url: "https://api.github.com/repos/daxiyun/cloudflare-pages/contents/bookmark/bookmarks.json",
                 headers: {
-                    "Authorization": "token " + GithubToken;
+                    "Authorization": "token " + GithubToken
                 },
                 success: function (data) {
                     sha = data.sha;
@@ -51,7 +51,7 @@
                             type: "put",
                             url: "https://api.github.com/repos/daxiyun/cloudflare-pages/contents/bookmark/bookmarks.json",
                             headers: {
-                                "Authorization": "token " + GithubToken;
+                                "Authorization": "token " + GithubToken
                             },
                             data: JSON.stringify(data),
                             success: function (result) {

@@ -28,7 +28,7 @@
 			xmlhttp.setRequestHeader("Authorization", pwd);
 			xmlhttp.send();
 			xmlhttp.onload = function() {
-                document.getElementById("html") = xmlhttp.response;
+                document.getElementById("html").innerHTML = xmlhttp.response;
 			}
         }
         

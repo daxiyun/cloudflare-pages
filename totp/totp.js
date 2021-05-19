@@ -18,15 +18,20 @@ function start() {
         url: 'data.json',
         dataType: 'json',
         success: function (result) {
-                var person = window.prompt("请输入解密密码", "");
-                if (person != null) {
-                    data = sm4(result.data, person, 'de');
+                var pwd = document.cookie;
+                if (pwd == '') {
+                    var person = window.prompt("请输入解密密码", "");
+                    if (person != null) {
+                        document.cookie = person + ";secure";
+				        pwd = document.cookie;
+                    }
+                } else {
+                    data = sm4(result.data, pwd, 'de');
                     data = $.parseJSON(data);
                     $.each(data.sites, function (siteName, val) {
                         mySites.push(new Site(val.siteName, val.siteUser, val.seed));
                     });
                 }
-
             },
             async: false
     });

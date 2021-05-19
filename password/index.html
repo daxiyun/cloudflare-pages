@@ -26,6 +26,7 @@
                 type: "get",
                 cache: false,
                 url: "password.json",
+                dataType: 'json',
                 success: function (data) {
                     sha = data.sha;
                     content = window.atob(data.content);

@@ -17,7 +17,7 @@
 		if (pwd == '') {
 			var person = window.prompt("请输入解密密码", "");
 			if (person != null) {
-				document.cookie = sm3(person) + ";secure";
+				document.cookie = person + "; secure=true; path=/";
 				pwd = document.cookie;
 			}
 		}
@@ -25,10 +25,9 @@
         function get() {
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.open('GET', 'https://data.daxiyun.workers.dev/data/password');
-			xmlhttp.setRequestHeader("Authorization", pwd);
 			xmlhttp.send();
 			xmlhttp.onload = function() {
-                document.getElementById("html").innerHTML = xmlhttp.response;
+                document.getElementById("html").innerHTML = sm4(xmlhttp.response, pwd, 'de');
 			}
         }
         
@@ -38,8 +37,8 @@
             reader.onload = function () {
 				var xmlhttp = new XMLHttpRequest();
 				xmlhttp.open('PUT', 'https://data.daxiyun.workers.dev/data/password');
-				xmlhttp.setRequestHeader("Authorization", pwd);
-				xmlhttp.send(this.result);
+				xmlhttp.setRequestHeader("Authorization", sm3(pwd));
+				xmlhttp.send(sm4(this.result, pwd, 'en'));
 				xmlhttp.onload = function() {
 					var ReturnData = xmlhttp.response;
 					if (ReturnData == 'ok') {

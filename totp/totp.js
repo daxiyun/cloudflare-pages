@@ -21,11 +21,13 @@ function start() {
                 if (pwd == '') {
                     var person = window.prompt("请输入解密密码", "");
                     if (person != null) {
-                        document.cookie = sm3(person) + ";secure";
+                        document.cookie = person + "; secure=true; path=/";
 				        pwd = document.cookie;
                     }
-                } else {
-                    data = $.parseJSON(result);
+                }
+                
+                if (pwd) {
+                    data = $.parseJSON(sm4(result, pwd, 'de'));
                     $.each(data.sites, function (siteName, val) {
                         mySites.push(new Site(val.siteName, val.siteUser, val.seed));
                     });

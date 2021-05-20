@@ -18,7 +18,7 @@
 		if (pwd == '') {
 			var person = window.prompt("请输入解密密码", "");
 			if (person != null) {
-				document.cookie = sm3(person) + ";secure";
+				document.cookie = person + "; secure=true; path=/";
 				pwd = document.cookie;
 			}
 		}
@@ -32,7 +32,7 @@
 			reader.onload = function() {
 				var xmlhttp = new XMLHttpRequest();
 				xmlhttp.open('PUT', url);
-				xmlhttp.setRequestHeader("Authorization", pwd);
+				xmlhttp.setRequestHeader("Authorization", sm3(pwd));
 				xmlhttp.send(this.result);
 				xmlhttp.onload = function() {
 					document.getElementById('return').innerHTML = '上传成功 <a href="'+url+'" target="_blank">'+url+'</a>';

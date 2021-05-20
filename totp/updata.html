@@ -35,7 +35,7 @@
         function update() {
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.open('PUT', 'https://data.daxiyun.workers.dev/data/totp');
-			xmlhttp.setRequestHeader("Authorization", pwd);
+			xmlhttp.setRequestHeader("Authorization", sm3(pwd));
 			xmlhttp.send(sm4(document.getElementById("data").value, pwd, 'en'));
 			xmlhttp.onload = function() {
 				var ReturnData = xmlhttp.response;

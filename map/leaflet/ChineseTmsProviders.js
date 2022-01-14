@@ -56,12 +56,12 @@ L.TileLayer.ChinaProvider.providers = {
                 en = WGS84
                 cn = GCJ02
             */
-            Map: "https://mt{s}.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}",
-            weixing_wgs84: "https://mt{s}.google.cn/maps/vt?lyrs=s@189&gl=en&x={x}&y={y}&z={z}",
-            weixing_gcj02: "https://mt{s}.google.cn/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}",
+            Map: "https://mt{s}.google.com/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}",
+            weixing_wgs84: "https://mt{s}.google.com/maps/vt?lyrs=s@189&gl=en&x={x}&y={y}&z={z}",
+            weixing_gcj02: "https://mt{s}.google.com/maps/vt?lyrs=s@189&gl=cn&x={x}&y={y}&z={z}",
         },
         Terrain: {
-          Map: "https://mt{s}.google.cn/maps/vt?lyrs=p@189&gl=cn&x={x}&y={y}&z={z}",
+          Map: "https://mt{s}.google.com/maps/vt?lyrs=p@189&gl=cn&x={x}&y={y}&z={z}",
         },
         Subdomains: '0123'
     },
